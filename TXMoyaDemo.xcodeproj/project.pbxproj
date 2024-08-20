@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		7156059CFDD588BAACA1EBF9 /* Pods_TXMoyaDemoTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 08C6FC63F15360F6BAB7C3FD /* Pods_TXMoyaDemoTests.framework */; };
 		A44647EA9D27A8ABDC9FF65B /* Pods_TXMoyaDemo_TXMoyaDemoUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4765BE289A5153E493DA5E42 /* Pods_TXMoyaDemo_TXMoyaDemoUITests.framework */; };
+		F19F10AD2C745FAA00D13A94 /* .swiftlint.yml in Resources */ = {isa = PBXBuildFile; fileRef = F19F10AC2C745FAA00D13A94 /* .swiftlint.yml */; };
 		F1B3E0172C4DFE3F007A54A5 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1B3E0162C4DFE3F007A54A5 /* AppDelegate.swift */; };
 		F1B3E0192C4DFE3F007A54A5 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1B3E0182C4DFE3F007A54A5 /* SceneDelegate.swift */; };
 		F1B3E01B2C4DFE3F007A54A5 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1B3E01A2C4DFE3F007A54A5 /* ViewController.swift */; };
@@ -54,6 +55,7 @@
 		9B521426D87BDE3521DB8583 /* Pods-TXMoyaDemoTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TXMoyaDemoTests.debug.xcconfig"; path = "Target Support Files/Pods-TXMoyaDemoTests/Pods-TXMoyaDemoTests.debug.xcconfig"; sourceTree = "<group>"; };
 		D9165854BC0B49F42C2300A3 /* Pods-TXMoyaDemoTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TXMoyaDemoTests.release.xcconfig"; path = "Target Support Files/Pods-TXMoyaDemoTests/Pods-TXMoyaDemoTests.release.xcconfig"; sourceTree = "<group>"; };
 		EC48B7F9D94C87D8C73C8BD5 /* Pods_TXMoyaDemo.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TXMoyaDemo.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		F19F10AC2C745FAA00D13A94 /* .swiftlint.yml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = SOURCE_ROOT; };
 		F1B3E0132C4DFE3F007A54A5 /* TXMoyaDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TXMoyaDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F1B3E0162C4DFE3F007A54A5 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		F1B3E0182C4DFE3F007A54A5 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -157,6 +159,7 @@
 				F1B3E04D2C4E059C007A54A5 /* TXMoyaManager */,
 				F1B3E01A2C4DFE3F007A54A5 /* ViewController.swift */,
 				F1B3E01C2C4DFE3F007A54A5 /* Main.storyboard */,
+				F19F10AC2C745FAA00D13A94 /* .swiftlint.yml */,
 				F1B3E01F2C4DFE41007A54A5 /* Assets.xcassets */,
 				F1B3E0212C4DFE41007A54A5 /* LaunchScreen.storyboard */,
 				F1B3E0242C4DFE41007A54A5 /* Info.plist */,
@@ -213,6 +216,7 @@
 				F1B3E0102C4DFE3F007A54A5 /* Frameworks */,
 				F1B3E0112C4DFE3F007A54A5 /* Resources */,
 				3EF15DCE5E83A776C659866A /* [CP] Embed Pods Frameworks */,
+				F19F10AE2C745FCB00D13A94 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -310,6 +314,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F19F10AD2C745FAA00D13A94 /* .swiftlint.yml in Resources */,
 				F1B3E0202C4DFE41007A54A5 /* Assets.xcassets in Resources */,
 				F1B3E0232C4DFE41007A54A5 /* Base in Resources */,
 				F1B3E01E2C4DFE3F007A54A5 /* Base in Resources */,
@@ -432,6 +437,23 @@
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
+		};
+		F19F10AE2C745FCB00D13A94 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\nif command -v swiftlint >/dev/null 2>&1\nthen\n    swiftlint\nelse\n    echo \"warning: `swiftlint` command not found - See https://github.com/realm/SwiftLint#installation for installation instructions.\"\nfi\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 

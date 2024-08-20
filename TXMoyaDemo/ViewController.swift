@@ -19,15 +19,14 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
                                      "发送请求，result 对象是字典（delegate形式回调）",
                                      "发送请求，result 对象是数组（delegate形式回调）",
                                      "发送模拟请求，使用 sampleData",
-                                     "请求失败后重试",
+                                     "请求失败后重试"
     ]
     
     // MARK: Public Method
     
-    
     // MARK: Private Method
     @objc private func sendRequest0() {
-        NetWorkRequest(Api.testApiNoParams, modelType: TXTestNewsModel.self) { response in
+        netWorkRequest(Api.testApiNoParams, modelType: TXTestNewsModel.self) { response in
             print("response.result 这个是对象 = \(String(describing: response.result))")
         } failureCallback: { error in
             print("请求----失败，error = \(String(describing: error))")
@@ -36,7 +35,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
 
     @objc private func sendRequest1() {
         let params: [String: String] = ["key": "value"]
-        NetWorkRequest(Api.testApiHasParams(params: params), modelsType: [TXTestModel].self) { response in
+        netWorkRequest(Api.testApiHasParams(params: params), modelsType: [TXTestModel].self) { response in
             print("response.result 这个是数组 = \(String(describing: response.result))")
         } failureCallback: { error in
             print("请求----失败，error = \(String(describing: error))")
@@ -44,7 +43,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     }
     
     @objc private func sendRequest2() {
-        NetWorkRxRequest(Api.testApiNoParams, modelType: TXTestNewsModel.self) { response in
+        netWorkRxRequest(Api.testApiNoParams, modelType: TXTestNewsModel.self) { response in
             print("response.result 这个是对象 = \(String(describing: response.result))")
         } failureCallback: { error in
             print("请求----失败，error = \(String(describing: error))")
@@ -53,7 +52,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     
     @objc private func sendRequest3() {
         let params: [String: String] = ["key": "value"]
-        NetWorkRxRequest(Api.testApiHasParams(params: params), modelsType: [TXTestModel].self) { response in
+        netWorkRxRequest(Api.testApiHasParams(params: params), modelsType: [TXTestModel].self) { response in
             print("response.result 这个是数组 = \(String(describing: response.result))")
         } failureCallback: { error in
             print("请求----失败，error = \(String(describing: error))")
@@ -61,23 +60,23 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     }
     
     @objc private func sendRequest4() {
-        NetWorkRequest(Api.testApiNoParams, modelType: TXTestNewsModel.self, delegate: self)
+        netWorkRequest(Api.testApiNoParams, modelType: TXTestNewsModel.self, delegate: self)
     }
     
     @objc private func sendRequest5() {
         let params: [String: String] = ["key": "value"]
-        NetWorkRequest(Api.testApiHasParams(params: params), modelsType: [TXTestModel].self, delegate: self)
+        netWorkRequest(Api.testApiHasParams(params: params), modelsType: [TXTestModel].self, delegate: self)
     }
     
     @objc private func sendRequest6() {
-        NetWorkRxRequest(Api.testApiSampleData, modelType: TXSampleDataModel.self, useSampleData: true) { response in
+        netWorkRxRequest(Api.testApiSampleData, modelType: TXSampleDataModel.self, useSampleData: true) { response in
             print("response = \(String(describing: response))")
         }
     }
     
     @objc private func sendRequest7() {
         let params: [String: String] = ["key": "value"]
-        NetWorkRxRequest(Api.testApiRetry(params: params), modelType: TXSampleDataModel.self, useSampleData: false) { response in
+        netWorkRxRequest(Api.testApiRetry(params: params), modelType: TXSampleDataModel.self, useSampleData: false) { response in
             print("response = \(String(describing: response))")
         }
     }
@@ -101,7 +100,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     }
     
     // MARK: MoyaProviderDelegate
-    func callApiDidSuccess<T>(target: TargetType, response: APIResponseModel<T>) where T : Decodable, T : Encodable {
+    func callApiDidSuccess<T>(target: any TargetType, response: APIResponseModel<T>) where T: Decodable, T: Encodable {
         if target.path == Api.testApiNoParams.path {
             if let result = response.result as? TXTestNewsModel, let data = result.data {
                 for newsModel in data {
@@ -175,4 +174,3 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     }()
 
 }
-

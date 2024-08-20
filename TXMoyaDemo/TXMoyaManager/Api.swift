@@ -120,7 +120,7 @@ extension Api: TargetType {
         default:
             break
         }
-        return """
+        let sampleJson = """
                 {
                     "reason": "sample-data",
                     "result": {
@@ -137,10 +137,11 @@ extension Api: TargetType {
                     },
                     "error_code": 0
                 }
-                """.data(using: .utf8)!
+                """
+        return sampleJson.data(using: .utf8)!
     }
     
-    var headers: [String : String]? {
+    var headers: [String: String]? {
         var headers: [String: String] = [:]
         headers["Content-type"] = "application/x-www-form-urlencoded"
         headers["Authorization"] = "token" + "token"

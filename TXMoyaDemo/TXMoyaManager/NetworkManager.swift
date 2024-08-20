@@ -59,7 +59,6 @@ private let endpointClosure = { (target: TargetType) -> Endpoint in
 //    HTTPHeader.defaultUserAgent
     endpoint = endpoint.adding(newHTTPHeaderFields: ["User-Agent2": customUserAgent])
     
-    
     requestTimeOut = 30
     // 针对于某个具体的业务模块来做接口配置
     if let apiTarget = target as? MultiTarget,
@@ -101,9 +100,9 @@ private let loggerPlugin = NetworkLoggerPlugin(configuration: loggerConfig)
 
 /// 网络请求发送的核心初始化方法，创建网络请求对象
 #if DEBUG
-fileprivate let provider = MoyaProvider<MultiTarget>(endpointClosure: endpointClosure, requestClosure: requestClosure, plugins: [networkPlugin, loggerPlugin], trackInflights: true)
+private let provider = MoyaProvider<MultiTarget>(endpointClosure: endpointClosure, requestClosure: requestClosure, plugins: [networkPlugin, loggerPlugin], trackInflights: true)
 #else
-fileprivate let provider = MoyaProvider<MultiTarget>(endpointClosure: endpointClosure, requestClosure: requestClosure, plugins: [networkPlugin, loggerPlugin], trackInflights: true)
+private let provider = MoyaProvider<MultiTarget>(endpointClosure: endpointClosure, requestClosure: requestClosure, plugins: [networkPlugin, loggerPlugin], trackInflights: true)
 #endif
 
 private let sampleDataProvider = MoyaProvider<MultiTarget>(stubClosure: { _ in
@@ -111,16 +110,16 @@ private let sampleDataProvider = MoyaProvider<MultiTarget>(stubClosure: { _ in
 })
 
 @discardableResult
-func NetWorkRequest<T: Codable>(_ target: TargetType, modelType: T.Type, delegate: MoyaProviderDelegate) -> Cancellable? {
-    return NetWorkRequest(target, modelType: modelType, delegate: delegate, successCallback: nil, failureCallback: nil)
+func netWorkRequest<T: Codable>(_ target: TargetType, modelType: T.Type, delegate: MoyaProviderDelegate) -> Cancellable? {
+    return netWorkRequest(target, modelType: modelType, delegate: delegate, successCallback: nil, failureCallback: nil)
 }
 
 @discardableResult
-func NetWorkRequest<T: Codable>(_ target: TargetType, modelType: T.Type, successCallback:@escaping RequestSuccessCallback<APIResponseModel<T>>, failureCallback: RequestFailureCallback? = nil) -> Cancellable? {
-    return NetWorkRequest(target, modelType: modelType, delegate: nil, successCallback: successCallback, failureCallback: failureCallback)
+func netWorkRequest<T: Codable>(_ target: TargetType, modelType: T.Type, successCallback: @escaping RequestSuccessCallback<APIResponseModel<T>>, failureCallback: RequestFailureCallback? = nil) -> Cancellable? {
+    return netWorkRequest(target, modelType: modelType, delegate: nil, successCallback: successCallback, failureCallback: failureCallback)
 }
 
-func NetWorkRxRequest<T: Codable>(_ target: TargetType, modelType: T.Type, useSampleData: Bool = false, successCallback:@escaping RequestSuccessCallback<APIResponseModel<T>>, failureCallback: RequestFailureCallback? = nil) {
+func netWorkRxRequest<T: Codable>(_ target: TargetType, modelType: T.Type, useSampleData: Bool = false, successCallback: @escaping RequestSuccessCallback<APIResponseModel<T>>, failureCallback: RequestFailureCallback? = nil) {
     if !UIDevice.isNetworkConnect {
         print("网络出现了问题")
         return
@@ -130,8 +129,8 @@ func NetWorkRxRequest<T: Codable>(_ target: TargetType, modelType: T.Type, useSa
     if useSampleData {
         providerRequest = sampleDataProvider
     }
-    let _ = providerRequest.rx.request(MultiTarget(target)).map(APIResponseModel<T>.self)
-        .subscribe (
+    _ = providerRequest.rx.request(MultiTarget(target)).map(APIResponseModel<T>.self)
+        .subscribe(
         onSuccess: { response in
             successCallback(response)
         },
@@ -145,21 +144,21 @@ func NetWorkRxRequest<T: Codable>(_ target: TargetType, modelType: T.Type, useSa
 }
 
 @discardableResult
-func NetWorkRequest<T: Codable>(_ target: TargetType, modelsType: [T].Type, delegate: MoyaProviderDelegate) -> Cancellable? {
-    return NetWorkRequest(target, modelsType: modelsType, delegate: delegate, successCallback: nil, failureCallback: nil)
+func netWorkRequest<T: Codable>(_ target: TargetType, modelsType: [T].Type, delegate: MoyaProviderDelegate) -> Cancellable? {
+    return netWorkRequest(target, modelsType: modelsType, delegate: delegate, successCallback: nil, failureCallback: nil)
 }
 
 @discardableResult
-func NetWorkRequest<T: Codable>(_ target: TargetType, modelsType: [T].Type, successCallback:@escaping RequestSuccessCallback<APIResponseModel<[T]>>, failureCallback: RequestFailureCallback? = nil) -> Cancellable? {
-    return NetWorkRequest(target, modelsType: modelsType, delegate: nil, successCallback: successCallback, failureCallback: failureCallback)
+func netWorkRequest<T: Codable>(_ target: TargetType, modelsType: [T].Type, successCallback: @escaping RequestSuccessCallback<APIResponseModel<[T]>>, failureCallback: RequestFailureCallback? = nil) -> Cancellable? {
+    return netWorkRequest(target, modelsType: modelsType, delegate: nil, successCallback: successCallback, failureCallback: failureCallback)
 }
 
-func NetWorkRxRequest<T: Codable>(_ target: TargetType, modelsType: [T].Type, successCallback:@escaping RequestSuccessCallback<APIResponseModel<[T]>>, failureCallback: RequestFailureCallback? = nil) {
+func netWorkRxRequest<T: Codable>(_ target: TargetType, modelsType: [T].Type, successCallback: @escaping RequestSuccessCallback<APIResponseModel<[T]>>, failureCallback: RequestFailureCallback? = nil) {
     if !UIDevice.isNetworkConnect {
         print("网络出现了问题")
         return
     }
-    let _ = provider.rx.request(MultiTarget(target)).map(APIResponseModel<[T]>.self).subscribe (
+    _ = provider.rx.request(MultiTarget(target)).map(APIResponseModel<[T]>.self).subscribe(
         onSuccess: { response in
             successCallback(response)
         },
@@ -172,8 +171,8 @@ func NetWorkRxRequest<T: Codable>(_ target: TargetType, modelsType: [T].Type, su
     )
 }
 
-// MARK Private Method
-private func NetWorkRequest<T: Codable>(_ target: TargetType, modelType: T.Type, delegate: MoyaProviderDelegate? = nil, successCallback: RequestSuccessCallback<APIResponseModel<T>>? = nil, failureCallback: RequestFailureCallback? = nil) -> Cancellable? {
+// MARK: Private Method
+private func netWorkRequest<T: Codable>(_ target: TargetType, modelType: T.Type, delegate: MoyaProviderDelegate? = nil, successCallback: RequestSuccessCallback<APIResponseModel<T>>? = nil, failureCallback: RequestFailureCallback? = nil) -> Cancellable? {
     if !UIDevice.isNetworkConnect {
         print("网络出现了问题")
         return nil
@@ -206,7 +205,7 @@ private func NetWorkRequest<T: Codable>(_ target: TargetType, modelType: T.Type,
     }
 }
 
-func NetWorkRequest<T: Codable>(_ target: TargetType, modelsType: [T].Type, delegate: MoyaProviderDelegate? = nil, successCallback: RequestSuccessCallback<APIResponseModel<[T]>>? = nil, failureCallback: RequestFailureCallback? = nil) -> Cancellable? {
+func netWorkRequest<T: Codable>(_ target: TargetType, modelsType: [T].Type, delegate: MoyaProviderDelegate? = nil, successCallback: RequestSuccessCallback<APIResponseModel<[T]>>? = nil, failureCallback: RequestFailureCallback? = nil) -> Cancellable? {
     if !UIDevice.isNetworkConnect {
         print("网络出现了问题")
         return nil
